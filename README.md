@@ -26,7 +26,7 @@
 </table>
 </div>
 
-Rathole is a transport node and security suite for [Reticulum](https://reticulum.network). It auto-configures a full transport node, wraps it in 12 security filters, and optionally hides it behind I2P — so anyone can run a public gateway from home without exposing their IP. Zero file editing: configure with a CLI wizard, operate with a full-screen TUI.
+Rathole is a transport node and security suite for [Reticulum](https://reticulum.network). It auto-configures a full transport node, wraps it in 12 security filters, and optionally hides it behind [I2P](https://i2p.net/en/) — so anyone can run a public gateway from home without exposing their IP. Zero file editing: configure with a CLI wizard, operate with a full-screen TUI.
 
 ## Why
 
