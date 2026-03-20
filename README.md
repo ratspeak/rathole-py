@@ -38,7 +38,7 @@ Rathole solves both problems:
 
 - **It is a transport node.** Not a bolt-on — Rathole auto-enables transport mode, configures Reticulum, and runs a full `rnsd`-equivalent stack.
 - **I2P built-in.** Run a publicly reachable gateway without exposing your IP address. The setup wizard handles i2pd installation and configuration.
-- **Auto-discovery.** Gateways publish their I2P address to a shared registry. Clients query the registry and connect automatically. No manual address swapping.
+- **Auto-discovery.** Gateways optionally publish their I2P address to a shared registry. Clients query the registry and connect automatically. No manual address swapping.
 - **12 security guards.** All inbound packets pass through a filter pipeline before propagating. Rate limiting, reputation tracking, anomaly detection, attack correlation — managed through a CLI wizard and full-screen TUI.
 
 Zero file editing required. Three commands to go from nothing to a secured transport node.
@@ -67,22 +67,14 @@ Install Python 3.11+ from [python.org](https://www.python.org/downloads/), then:
 pip install -e ".[all]"
 ```
 
-### Install individuals
-
-| Extra | What it adds |
-|-------|-------------|
-| `pip install -e .` | Core only (RNS + Rich CLI) |
-| `pip install -e ".[tui]"` | + Terminal UI (Textual) |
-| `pip install -e ".[metrics]"` | + Prometheus metrics |
-| `pip install -e ".[setup]"` | + Setup wizard |
-| `pip install -e ".[all]"` | Everything |
-
 ## Quick Start
 
 
 `rat setup` walks you through node mode (gateway or client), preset selection, I2P configuration, and registry opt-in. It writes `rathole.toml` — you never need to edit it by hand.
 
 `rat run` runs the client or gateway if you quit and want to run it again later.
+
+`rat reset` resets (optionally) all of your config and data.
 
 ## How It Works
 
@@ -105,9 +97,11 @@ I2P gives your node a publicly reachable address without revealing your IP. Rath
 2. Creates an I2P tunnel for your Reticulum transport node
 3. Optionally publishes your I2P address (B32) to the gateway registry
 
+`NOTE: To ensure you are publishing on the registry, connect via TCP to rns.ratspeak.org:4242 once your I2P client is running. You can only be published if you are seen by the registry node, which may be difficult without TCP until I2P is bootstrapped.`
+
 Other Rathole nodes with registry enabled will discover your gateway automatically and connect. You can run a public transport gateway from your couch.
 
-The registry uses signed registrations (Ed25519, via your node's transport identity) and entries expire after 15 minutes without a heartbeat. No IP addresses are stored or transmitted — only I2P B32 addresses.
+The registry uses signed registrations (Ed25519, via your node's transport identity) and entries expire after 30 minutes without a heartbeat. No IP addresses are stored or transmitted — only I2P B32 addresses.
 
 ## Security Guards
 
