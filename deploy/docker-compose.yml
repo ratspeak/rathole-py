@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  rathole:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: rathole
+    restart: unless-stopped
+    volumes:
+      - rathole-state:/var/lib/rathole
+      - ./rathole.toml:/etc/rathole/rathole.toml:ro
+    ports:
+      - "9777:9777"    # Prometheus metrics
+    network_mode: host  # Required for RNS transport access
+
+volumes:
+  rathole-state:

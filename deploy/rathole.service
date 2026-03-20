@@ -1,0 +1,25 @@
+[Unit]
+Description=Rathole Security Suite for Reticulum
+After=network.target
+Documentation=https://github.com/ratspeak/rathole-py
+
+[Service]
+Type=simple
+User=rathole
+Group=rathole
+ExecStart=/usr/bin/rathole --config /etc/rathole/rathole.toml --headless
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/rathole /var/run
+
+[Install]
+WantedBy=multi-user.target
